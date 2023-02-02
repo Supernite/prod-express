@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken")
 
 exports.index = (req, res, next) => {
     res.status(200).json({
-      fullname: 'Nuttareepan Nittayoosakulchot'
+      fullname: 'Nuttareepan Nittayoosakulchot Nite'
     })
 }
 
