@@ -2,6 +2,8 @@ const User = require("../models/user")
 const { validationResult } = require('express-validator')
 const { response } = require("express")
 const jwt = require("jsonwebtoken")
+const config = require("../config/index");
+
 
 exports.index = (req, res, next) => {
     res.status(200).json({
@@ -87,7 +89,7 @@ exports.login = async (req,res,next) => {
     const token = await jwt.sign({
       id:user._id,
       role: user.role,
-    },'ED216FD330527F30C4CBECA67FD9B16B00164620D5911DEB9C7B6F0DBED59CB2'
+    },config.JWT_SECRET
     , { expiresIn: "5 days"})
 
     const expires_in = jwt.decode(token)
@@ -102,4 +104,13 @@ exports.login = async (req,res,next) => {
   } catch (error) {
     next(error)
   }
+}
+
+exports.profile = (req, res, next) => {
+  const { role,name,email} = req.user
+  res.status(200).json({    
+    name: name,
+    email: email,
+    role: role,
+  })
 }
